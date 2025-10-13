@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FitCRM — Client List</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="page-list">
+  <header class="site-header">
+    <div class="container header-inner">
+      <h1 class="brand"><a href="index.html">FitCRM</a></h1>
+      <nav class="main-nav">
+        <a href="new-client.html" class="nav-link">New Client</a>
+        <a href="clients.html" class="nav-link active">Client List</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container main-content">
+    <section class="card list-card">
+      <div class="list-header">
+        <h2>Clients</h2>
+        <div class="search-wrap">
+          <label for="search" class="visually-hidden">Search by name</label>
+          <input id="search" name="search" type="text" placeholder="Search by name (placeholder)" />
+        </div>
+      </div>
+
+      <!-- Client table with 10 sample rows -->
+      <div class="table-responsive">
+        <table class="client-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Fitness Goal</th>
+              <th>Start Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 10 sample clients -->
+            <tr>
+              <td>Amira Khaled</td><td>amira.k@example.com</td><td>+20 100 111 0001</td><td>Weight Loss</td><td>2025-01-10</td>
+              <td class="actions"><button class="btn small">Edit</button><button class="btn small ghost">Delete</button></td>
+            </tr>
+            <tr>
+              <td>Omar Hassan</td><td>omar.h@example.com</td><td>+20 100 111 0002</td><td>Muscle Gain</td><td>2025-02-01</td>
+              <td class="actions"><button class="btn small">Edit</button><button class="btn small ghost">Delete</button></td>
+            </tr>
+            <tr>
+              <td>Leila Samir</td><td>leila.s@example.com</td><td>+20 100 111 0003</td><td>General Fitness</td><td>2024-09-15</td>
+              <td class="actions"><button class="btn small">Edit</button><button class="btn small ghost">Delete</button></td>
+            </tr>
+            <tr>
+              <td>Karim Nabil</td><td>karim.n@example.com</td><td>+20 100 111 0004</td><td>Muscle Gain</td><td>2025-03-20</td>
+              <td class="actions"><button class="btn small">Edit</button><button class="btn small ghost">Delete</button></td>
+            </tr>
+            <tr>
+              <td>Nora Adel</td><td>nora.a@example.com</td><td>+20 100 111 0005</td><td>Weight Loss</td><td>2024-12-05</td>
+              <td class="actions"><button class="btn small">Edit</button><button class="btn small ghost">Delete</button></td>
+            </tr>
+            <tr>
+              <td>Youssef Emad</td><td>youssef.e@example.com</td><td>+20 100 111 0006</td><td>Cardio Endurance</td><td>2025-04-02</td>
+              <td class="actions"><button class="btn small">Edit</button><button class="btn small ghost">Delete</button></td>
+            </tr>
+            <tr>
+              <td>Sara Mostafa</td><td>sara.m@example.com</td><td>+20 100 111 0007</td><td>Flexibility</td><td>2024-11-12</td>
+              <td class="actions"><button class="btn small">Edit</button><button class="btn small ghost">Delete</button></td>
+            </tr>
+            <tr>
+              <td>Mahmoud Farag</td><td>mahmoud.f@example.com</td><td>+20 100 111 0008</td><td>Weight Loss</td><td>2025-05-18</td>
+              <td class="actions"><button class="btn small">Edit</button><button class="btn small ghost">Delete</button></td>
+            </tr>
+            <tr>
+              <td>Dina Gamal</td><td>dina.g@example.com</td><td>+20 100 111 0009</td><td>Muscle Gain</td><td>2024-10-03</td>
+              <td class="actions"><button class="btn small">Edit</button><button class="btn small ghost">Delete</button></td>
+            </tr>
+            <tr>
+              <td>Rami Saad</td><td>rami.s@example.com</td><td>+20 100 111 0010</td><td>General Fitness</td><td>2025-06-01</td>
+              <td class="actions"><button class="btn small">Edit</button><button class="btn small ghost">Delete</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="muted note">Note: Edit/Delete/Search are placeholders (no JS behavior in this frontend-only mockup).</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>FitCRM — Client List</small>
+    </div>
+  </footer>
+</body>
+</html>

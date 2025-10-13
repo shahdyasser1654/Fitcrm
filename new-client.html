@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FitCRM — New Client</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="page-form">
+  <header class="site-header">
+    <div class="container header-inner">
+      <h1 class="brand"><a href="index.html">FitCRM</a></h1>
+      <nav class="main-nav">
+        <a href="new-client.html" class="nav-link active">New Client</a>
+        <a href="clients.html" class="nav-link">Client List</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container main-content">
+    <section class="card form-card">
+      <h2>New Client Form</h2>
+      <p class="muted">All fields are visible. "Add Client" is a placeholder (no action performed).</p>
+
+      <form class="client-form" onsubmit="return false;">
+        <!-- Full Name -->
+        <label for="fullName">Full Name</label>
+        <input id="fullName" name="fullName" type="text" placeholder="e.g., Sarah Ahmed" required />
+
+        <!-- Age -->
+        <label for="age">Age</label>
+        <input id="age" name="age" type="number" min="10" max="100" placeholder="e.g., 28" />
+
+        <!-- Gender -->
+        <label for="gender">Gender</label>
+        <select id="gender" name="gender">
+          <option value="">Select</option>
+          <option>Female</option>
+          <option>Male</option>
+          <option>Non-binary</option>
+          <option>Prefer not to say</option>
+        </select>
+
+        <!-- Email -->
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="name@example.com" />
+
+        <!-- Phone -->
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" type="tel" placeholder="+20 1X XXX XXXX" />
+
+        <!-- Fitness Goal -->
+        <label for="goal">Fitness Goal</label>
+        <input id="goal" name="goal" type="text" placeholder="e.g., Weight Loss, Muscle Gain" />
+
+        <!-- Membership Start Date -->
+        <label for="startDate">Membership Start Date</label>
+        <input id="startDate" name="startDate" type="date" />
+
+        <!-- Add Client button (placeholder) -->
+        <div class="form-actions">
+          <button class="btn" type="submit">Add Client</button>
+          <a class="btn ghost" href="clients.html">View Clients</a>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>FitCRM • Form page (placeholder actions)</small>
+    </div>
+  </footer>
+</body>
+</html>
