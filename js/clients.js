@@ -22,12 +22,14 @@ function saveClients(list) {
 
 // Seed demo clients only if none exist
 function seedIfNeeded() {
-  const existing = loadClients();
-  if (existing && existing.length > 0) {
-    allClients = existing;
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (raw) {
+    // localStorage has data, load it
+    allClients = loadClients();
     return;
   }
 
+  // localStorage is empty, seed demo clients
   allClients = [
     { id: "c1", name: "Amira Khaled", email: "amira.k@example.com", phone: "+20 100 111 0001", goal: "Weight Loss", startDate: "2025-01-10", trainingHistory: "" },
     { id: "c2", name: "Omar Hassan", email: "omar.h@example.com", phone: "+20 100 111 0002", goal: "Muscle Gain", startDate: "2025-02-01", trainingHistory: "" },
