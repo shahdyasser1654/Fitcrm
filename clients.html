@@ -21,10 +21,8 @@
     <section class="card list-card">
       <div class="list-header">
         <h2>Clients</h2>
-
         <div class="search-wrap">
-          <label for="search" class="visually-hidden">Search by name</label>
-          <input id="search" name="search" type="text" placeholder="Search by name" />
+          <input id="search" type="text" placeholder="Search clients...">
         </div>
       </div>
 
@@ -35,25 +33,21 @@
               <th>Name</th>
               <th>Email</th>
               <th>Phone</th>
-              <th>Fitness Goal</th>
+              <th>Goal</th>
               <th>Start Date</th>
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody id="clientTableBody">
-            <!-- JS injects rows -->
-          </tbody>
+          <tbody id="clientTableBody"></tbody>
         </table>
       </div>
 
-      <p class="muted note">Click a row to view client details. Use Edit/Delete to manage clients.</p>
+      <p class="muted">Click a client row to view full details.</p>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container">
-      <small>FitCRM — Client List</small>
-    </div>
+    <div class="container"><small>FitCRM — Client List</small></div>
   </footer>
 
   <script src="clients.js"></script>
