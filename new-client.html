@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>FitCRM — New Client</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="page-form">
   <header class="site-header">
@@ -19,105 +19,49 @@
 
   <main class="container main-content">
     <section class="card form-card">
-      <!-- JS will change this to "Edit Client" in edit mode -->
       <h2 id="formTitle">New Client Form</h2>
-      <p class="muted">
-        Fill in the form to add a new client. Required fields are marked with *.
-      </p>
+      <p class="muted">Fill in the form to add or edit a client.</p>
 
-      <form id="clientForm" class="client-form" novalidate>
-        <!-- Full Name -->
+      <form id="clientForm" novalidate>
+
         <label for="fullName">Full Name *</label>
-        <input
-          id="fullName"
-          name="fullName"
-          type="text"
-          placeholder="e.g., Sarah Ahmed"
-          required
-        />
+        <input id="fullName" type="text" required />
         <small class="field-error" data-error-for="fullName"></small>
 
-        <!-- Age (optional) -->
         <label for="age">Age</label>
-        <input
-          id="age"
-          name="age"
-          type="number"
-          min="10"
-          max="100"
-          placeholder="e.g., 28"
-        />
-        <small class="field-error" data-error-for="age"></small>
+        <input id="age" type="number" min="10" max="100" />
 
-        <!-- Gender (optional) -->
         <label for="gender">Gender</label>
-        <select id="gender" name="gender">
+        <select id="gender">
           <option value="">Select</option>
           <option>Female</option>
           <option>Male</option>
           <option>Non-binary</option>
           <option>Prefer not to say</option>
         </select>
-        <small class="field-error" data-error-for="gender"></small>
 
-        <!-- Email -->
         <label for="email">Email *</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="name@example.com"
-          required
-        />
+        <input id="email" type="email" required />
         <small class="field-error" data-error-for="email"></small>
 
-        <!-- Phone -->
         <label for="phone">Phone *</label>
-        <input
-          id="phone"
-          name="phone"
-          type="tel"
-          placeholder="+20 1X XXX XXXX"
-          required
-        />
+        <input id="phone" type="tel" required />
         <small class="field-error" data-error-for="phone"></small>
 
-        <!-- Fitness Goal -->
         <label for="goal">Fitness Goal *</label>
-        <input
-          id="goal"
-          name="goal"
-          type="text"
-          placeholder="e.g., Weight Loss, Muscle Gain"
-          required
-        />
+        <input id="goal" type="text" required />
         <small class="field-error" data-error-for="goal"></small>
 
-        <!-- Membership Start Date -->
         <label for="startDate">Membership Start Date *</label>
-        <input
-          id="startDate"
-          name="startDate"
-          type="date"
-          required
-        />
+        <input id="startDate" type="date" required />
         <small class="field-error" data-error-for="startDate"></small>
 
-        <!-- Training History (required by spec but can be free text) -->
         <label for="history">Training History</label>
-        <textarea
-          id="history"
-          name="history"
-          rows="4"
-          placeholder="Optional notes about past sessions, frequency, or programme."
-        ></textarea>
-        <small class="field-error" data-error-for="history"></small>
+        <textarea id="history"></textarea>
 
-        <!-- Actions -->
         <div class="form-actions">
-          <!-- JS will change this text to "Save Changes" in edit mode -->
           <button class="btn" type="submit" id="submitBtn">Add Client</button>
-          <a class="btn ghost" href="clients.html">View Clients</a>
+          <a class="btn ghost" href="clients.html">Cancel</a>
         </div>
       </form>
     </section>
@@ -125,10 +69,10 @@
 
   <footer class="site-footer">
     <div class="container">
-      <small>FitCRM • New Client</small>
+      <small>FitCRM — New Client</small>
     </div>
   </footer>
 
-  <script src="js/new-client.js"></script>
+  <script src="new-client.js"></script>
 </body>
 </html>
