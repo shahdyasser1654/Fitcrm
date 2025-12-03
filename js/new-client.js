@@ -1,186 +1,111 @@
-// js/new-client.js
-
 const STORAGE_KEY = "fitcrmClients";
 const EDIT_ID_KEY = "fitcrmEditClientId";
 
-// ---- Helpers for localStorage ----
-
-function loadClientsFromStorage() {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (!raw) return [];
+function loadClients() {
   try {
-    return JSON.parse(raw);
-  } catch (err) {
-    console.error("Error parsing clients from localStorage:", err);
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  } catch {
     return [];
   }
 }
-
-function saveClientsToStorage(clients) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(clients));
+function saveClients(list) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
 }
 
-// ---- Validation helpers ----
-
+function showError(field, msg) {
+  const el = document.querySelector(`[data-error-for="${field}"]`);
+  if (el) el.textContent = msg;
+}
 function clearErrors() {
-  const errorEls = document.querySelectorAll(".field-error");
-  errorEls.forEach((el) => {
-    el.textContent = "";
-  });
+  document.querySelectorAll(".field-error").forEach(el => el.textContent = "");
+}
+function validEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-function showError(fieldName, message) {
-  const errorEl = document.querySelector(
-    `.field-error[data-error-for="${fieldName}"]`
-  );
-  if (errorEl) {
-    errorEl.textContent = message;
-  }
-}
-
-function isValidEmail(email) {
-  if (!email) return false;
-  // simple email regex is enough for this assignment
-  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return pattern.test(email);
-}
-
-// ---- Main logic ----
-
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("clientForm");
-  const titleEl = document.getElementById("formTitle");
+  const fullName = document.getElementById("fullName");
+  const age = document.getElementById("age");
+  const gender = document.getElementById("gender");
+  const email = document.getElementById("email");
+  const phone = document.getElementById("phone");
+  const goal = document.getElementById("goal");
+  const startDate = document.getElementById("startDate");
+  const history = document.getElementById("history");
+  const title = document.getElementById("formTitle");
   const submitBtn = document.getElementById("submitBtn");
 
-  const fullNameInput = document.getElementById("fullName");
-  const ageInput = document.getElementById("age");
-  const genderInput = document.getElementById("gender");
-  const emailInput = document.getElementById("email");
-  const phoneInput = document.getElementById("phone");
-  const goalInput = document.getElementById("goal");
-  const startDateInput = document.getElementById("startDate");
-  const historyInput = document.getElementById("history");
+  let clients = loadClients();
+  let editId = localStorage.getItem(EDIT_ID_KEY);
+  let editing = clients.find(c => c.id === editId);
 
-  let clients = loadClientsFromStorage();
+  if (editing) {
+    fullName.value = editing.name;
+    age.value = editing.age || "";
+    gender.value = editing.gender || "";
+    email.value = editing.email;
+    phone.value = editing.phone;
+    goal.value = editing.goal;
+    startDate.value = editing.startDate;
+    history.value = editing.trainingHistory || "";
 
-  // Check if we're in "edit mode"
-  let editingClientId = localStorage.getItem(EDIT_ID_KEY);
-  let editingClient = null;
-
-  if (editingClientId) {
-    editingClient = clients.find((c) => c.id === editingClientId);
-
-    if (editingClient) {
-      // Update title + button text
-      if (titleEl) titleEl.textContent = "Edit Client";
-      if (submitBtn) submitBtn.textContent = "Save Changes";
-
-      // Repopulate form with existing data
-      fullNameInput.value = editingClient.name || "";
-      ageInput.value = editingClient.age || "";
-      genderInput.value = editingClient.gender || "";
-      emailInput.value = editingClient.email || "";
-      phoneInput.value = editingClient.phone || "";
-      goalInput.value = editingClient.goal || "";
-      startDateInput.value = editingClient.startDate || "";
-      historyInput.value = editingClient.trainingHistory || "";
-    } else {
-      // If client not found, clear the edit id so we don't get stuck
-      localStorage.removeItem(EDIT_ID_KEY);
-      editingClientId = null;
-    }
+    title.textContent = "Edit Client";
+    submitBtn.textContent = "Save Changes";
   }
 
-  // Handle form submit
-  if (!form) return;
-
-  form.addEventListener("submit", function (event) {
-    event.preventDefault();
+  form.addEventListener("submit", e => {
+    e.preventDefault();
     clearErrors();
 
-    const name = fullNameInput.value.trim();
-    const age = ageInput.value ? parseInt(ageInput.value, 10) : null;
-    const gender = genderInput.value;
-    const email = emailInput.value.trim();
-    const phone = phoneInput.value.trim();
-    const goal = goalInput.value.trim();
-    const startDate = startDateInput.value;
-    const trainingHistory = historyInput.value.trim();
+    let error = false;
 
-    let hasError = false;
-
-    // Required: name
-    if (!name) {
+    if (!fullName.value.trim()) {
       showError("fullName", "Full name is required.");
-      hasError = true;
+      error = true;
     }
-
-    // Required: email
-    if (!email) {
+    if (!email.value.trim()) {
       showError("email", "Email is required.");
-      hasError = true;
-    } else if (!isValidEmail(email)) {
-      showError("email", "Please enter a valid email address.");
-      hasError = true;
+      error = true;
+    } else if (!validEmail(email.value)) {
+      showError("email", "Invalid email format.");
+      error = true;
+    }
+    if (!phone.value.trim()) {
+      showError("phone", "Phone is required.");
+      error = true;
+    }
+    if (!goal.value.trim()) {
+      showError("goal", "Fitness goal is required.");
+      error = true;
+    }
+    if (!startDate.value.trim()) {
+      showError("startDate", "Start date is required.");
+      error = true;
     }
 
-    // Required: phone
-    if (!phone) {
-      showError("phone", "Phone number is required.");
-      hasError = true;
-    }
-
-    // Required: goal
-    if (!goal) {
-      showError("goal", "Please enter a fitness goal.");
-      hasError = true;
-    }
-
-    // Required: start date
-    if (!startDate) {
-      showError("startDate", "Please select a start date.");
-      hasError = true;
-    }
-
-    // Age basic validation (only if provided)
-    if (ageInput.value && (age < 10 || age > 100)) {
-      showError("age", "Age should be between 10 and 100.");
-      hasError = true;
-    }
-
-    if (hasError) {
-      return; // don't submit if there are validation errors
-    }
-
-    // Build client object
-    let clientId = editingClientId;
-    if (!clientId) {
-      clientId = "c" + Date.now(); // simple unique id
-    }
+    if (error) return;
 
     const clientData = {
-      id: clientId,
-      name,
-      age,
-      gender,
-      email,
-      phone,
-      goal,
-      startDate,
-      trainingHistory
+      id: editId || ("c" + Date.now()),
+      name: fullName.value.trim(),
+      age: age.value || null,
+      gender: gender.value || "",
+      email: email.value.trim(),
+      phone: phone.value.trim(),
+      goal: goal.value.trim(),
+      startDate: startDate.value.trim(),
+      trainingHistory: history.value.trim()
     };
 
-    // If editing, update existing client; otherwise, add new one
-    const existingIndex = clients.findIndex((c) => c.id === clientId);
-    if (existingIndex !== -1) {
-      clients[existingIndex] = clientData;
+    if (editId) {
+      const index = clients.findIndex(c => c.id === editId);
+      clients[index] = clientData;
     } else {
       clients.push(clientData);
     }
 
-    saveClientsToStorage(clients);
-
-    // Clear edit id and redirect back to client list
+    saveClients(clients);
     localStorage.removeItem(EDIT_ID_KEY);
     window.location.href = "clients.html";
   });
