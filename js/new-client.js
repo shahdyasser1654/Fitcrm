@@ -2,107 +2,62 @@ const STORAGE_KEY = "fitcrmClients";
 const EDIT_ID_KEY = "fitcrmEditClientId";
 
 function loadClients() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-  } catch {
-    return [];
-  }
+  return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 }
+
 function saveClients(list) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
 }
 
-function showError(field, msg) {
-  const el = document.querySelector(`[data-error-for="${field}"]`);
-  if (el) el.textContent = msg;
-}
-function clearErrors() {
-  document.querySelectorAll(".field-error").forEach(el => el.textContent = "");
-}
-function validEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+function showError(id, message) {
+  document.querySelector(`[data-error-for="${id}"]`).textContent = message;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("clientForm");
-  const fullName = document.getElementById("fullName");
-  const age = document.getElementById("age");
-  const gender = document.getElementById("gender");
-  const email = document.getElementById("email");
-  const phone = document.getElementById("phone");
-  const goal = document.getElementById("goal");
-  const startDate = document.getElementById("startDate");
-  const history = document.getElementById("history");
-  const title = document.getElementById("formTitle");
-  const submitBtn = document.getElementById("submitBtn");
 
+  const id = localStorage.getItem(EDIT_ID_KEY);
   let clients = loadClients();
-  let editId = localStorage.getItem(EDIT_ID_KEY);
-  let editing = clients.find(c => c.id === editId);
+  let editing = clients.find(c => c.id === id);
 
   if (editing) {
+    document.getElementById("formTitle").textContent = "Edit Client";
+    document.getElementById("submitBtn").textContent = "Save Changes";
+
     fullName.value = editing.name;
-    age.value = editing.age || "";
-    gender.value = editing.gender || "";
     email.value = editing.email;
     phone.value = editing.phone;
     goal.value = editing.goal;
     startDate.value = editing.startDate;
-    history.value = editing.trainingHistory || "";
-
-    title.textContent = "Edit Client";
-    submitBtn.textContent = "Save Changes";
+    history.value = editing.trainingHistory;
   }
 
   form.addEventListener("submit", e => {
     e.preventDefault();
-    clearErrors();
 
-    let error = false;
+    document.querySelectorAll("small").forEach(s => s.textContent = "");
 
-    if (!fullName.value.trim()) {
-      showError("fullName", "Full name is required.");
-      error = true;
-    }
-    if (!email.value.trim()) {
-      showError("email", "Email is required.");
-      error = true;
-    } else if (!validEmail(email.value)) {
-      showError("email", "Invalid email format.");
-      error = true;
-    }
-    if (!phone.value.trim()) {
-      showError("phone", "Phone is required.");
-      error = true;
-    }
-    if (!goal.value.trim()) {
-      showError("goal", "Fitness goal is required.");
-      error = true;
-    }
-    if (!startDate.value.trim()) {
-      showError("startDate", "Start date is required.");
-      error = true;
-    }
+    if (!fullName.value.trim()) return showError("fullName", "Required");
+    if (!email.value.trim()) return showError("email", "Required");
+    if (!phone.value.trim()) return showError("phone", "Required");
+    if (!goal.value.trim()) return showError("goal", "Required");
+    if (!startDate.value.trim()) return showError("startDate", "Required");
 
-    if (error) return;
-
-    const clientData = {
-      id: editId || ("c" + Date.now()),
+    const data = {
+      id: editing ? editing.id : Date.now().toString(),
       name: fullName.value.trim(),
-      age: age.value || null,
-      gender: gender.value || "",
       email: email.value.trim(),
       phone: phone.value.trim(),
       goal: goal.value.trim(),
-      startDate: startDate.value.trim(),
+      startDate: startDate.value,
       trainingHistory: history.value.trim()
     };
 
-    if (editId) {
-      const index = clients.findIndex(c => c.id === editId);
-      clients[index] = clientData;
+    if (editing) {
+      const index = clients.findIndex(c => c.id === editing.id);
+      clients[index] = data;
     } else {
-      clients.push(clientData);
+      clients.push(data);
     }
 
     saveClients(clients);
